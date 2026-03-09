@@ -16,12 +16,14 @@ public class TransactionService {
     public List<Transaction> getAll() {
         return transactionRepository.findAll();
     }
+
     public Transaction getById(Long id) {
         return transactionRepository.findById(id).orElse(null);
     }
     public Transaction save(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
+
     public void deleteById(Long id) {
         transactionRepository.deleteById(id);
     }
