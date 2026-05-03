@@ -14,7 +14,7 @@ public class Transaction {
     private Long id;
     private Double amount;
     private TransactionType type;
-    private String category;
+    private Category category;
     private String description;
     private LocalDate date;
 
@@ -42,11 +42,10 @@ public class Transaction {
         this.type = newType;
     }
 
-    public String getCategory(){
+    public Category getCategory(){
         return category;
     }
-    public void setCategory(String newCategory){
-        this.category = newCategory;
+    public void setCategory(Category newCategory){this.category = newCategory;
     }
 
     public String getDescription() {
