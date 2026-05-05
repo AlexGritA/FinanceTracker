@@ -21,9 +21,10 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
+
     public void setId(Long newId) {
         this.id = newId;
     }
@@ -31,6 +32,7 @@ public class Transaction {
     public Double getAmount(){
         return amount;
     }
+
     public void setAmount(Double newAmount) {
         this.amount = newAmount;
     }
@@ -38,6 +40,7 @@ public class Transaction {
     public TransactionType getType() {
         return type;
     }
+
     public void setType(TransactionType newType) {
         this.type = newType;
     }
@@ -45,12 +48,15 @@ public class Transaction {
     public Category getCategory(){
         return category;
     }
-    public void setCategory(Category newCategory){this.category = newCategory;
+
+    public void setCategory(Category newCategory) {
+        this.category = newCategory;
     }
 
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String newDescription) {
         this.description = newDescription;
     }
@@ -58,8 +64,8 @@ public class Transaction {
     public LocalDate getDate() {
         return date;
     }
+
     public void setDate(LocalDate newDate) {
         this.date = newDate;
     }
-
 }
