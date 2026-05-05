@@ -23,6 +23,19 @@ public class TransactionService {
     public Transaction getById(Long id) {
         return transactionRepository.findById(id).orElse(null);
     }
+
+    public Transaction updateById(Long id, Transaction updateTransaction){
+        Transaction existing = transactionRepository.findById(id).orElse(null);
+        if (existing == null) {
+            return null;
+        }
+        existing.setAmount(updateTransaction.getAmount());
+        existing.setCategory(updateTransaction.getCategory());
+        existing.setType(updateTransaction.getType());
+        existing.setDescription(updateTransaction.getDescription());
+        return transactionRepository.save(existing);
+    }
+
     public Transaction save(Transaction transaction) {
         return transactionRepository.save(transaction);
     }

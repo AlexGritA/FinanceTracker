@@ -30,6 +30,11 @@ public class TransactionController {
         return transactionService.getSummary();
     }
 
+    @PutMapping("/{id}")
+    public Transaction update(@PathVariable Long id,@RequestBody Transaction transaction) {
+        return transactionService.updateById(id, transaction);
+    }
+
     @PostMapping
     public Transaction save(@RequestBody Transaction transaction) {
         return transactionService.save(transaction);
