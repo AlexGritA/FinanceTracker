@@ -12,11 +12,12 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    //nyckel för signera tokens
+    // Secret key for signing tokens - generated once on startup
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    // Token expiration time - 24 hours in milliseconds
     private final long EXPIRATION = 1000 * 60 * 60 * 24;
 
-    //metod som genererar token
+    // Generates a JWT token with username as subject
     public String generateToken(String username) {
             return Jwts.builder()
                     .setSubject(username)
@@ -25,7 +26,7 @@ public class JwtUtil {
                     .signWith(key)
                     .compact();
     }
-
+    // Extracts username from a JWT token
     public String extractUsername(String token) {
         return Jwts.parser()
                 .verifyWith((javax.crypto.SecretKey) key)
@@ -35,7 +36,7 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    //metod som validerar token
+    // Validates token by comparing extracted username with expected username
     public Boolean validateToken(String token, String username) {
         return extractUsername(token).equals(username);
     }

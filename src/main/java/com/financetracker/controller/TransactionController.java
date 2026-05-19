@@ -25,15 +25,14 @@ public class TransactionController {
     public Transaction getById(@PathVariable Long id) {
         return transactionService.getById(id);
     }
+
     @GetMapping("/summary")
-    public Map<String, Double> getSummary() {
-        return transactionService.getSummary();
+    public Map<String, Double> getSummary() { return transactionService.getSummary();
     }
 
     @PutMapping("/{id}")
     public Transaction update(@PathVariable Long id,@RequestBody Transaction transaction) {
-        return transactionService.updateById(id, transaction);
-    }
+        return transactionService.updateById(id, transaction);}
 
     @PostMapping
     public Transaction save(@RequestBody Transaction transaction) {
