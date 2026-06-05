@@ -4,6 +4,7 @@ import com.financetracker.model.User;
 import com.financetracker.security.JwtUtil;
 import com.financetracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +15,8 @@ public class AuthController {
     private UserService userService;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public User register(@RequestBody User user) {
@@ -26,10 +29,9 @@ public class AuthController {
         if (existing == null) {
             return "User not found";
         }
-        if (!existing.getPassword().equals(user.getPassword())) {
+        if (!passwordEncoder.matches(user.getPassword(), existing.getPassword())) {
             return "Wrong password";
         }
         return jwtUtil.generateToken(existing.getUsername());
     }
-
 }
