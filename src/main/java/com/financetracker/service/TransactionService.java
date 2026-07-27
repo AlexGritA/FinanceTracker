@@ -2,8 +2,10 @@ package com.financetracker.service;
 
 import com.financetracker.model.Transaction;
 import com.financetracker.model.TransactionType;
+import com.financetracker.model.User;
 import com.financetracker.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,10 +16,15 @@ import java.util.Map;
 public class TransactionService {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private TransactionRepository transactionRepository;
 
     public List<Transaction> getAll() {
-        return transactionRepository.findAll();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        return transactionRepository.findByUser(user);
     }
 
     public Transaction getById(Long id) {
@@ -37,6 +44,9 @@ public class TransactionService {
     }
 
     public Transaction save(Transaction transaction) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        transaction.setUser(user);
         return transactionRepository.save(transaction);
     }
 

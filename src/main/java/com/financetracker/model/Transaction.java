@@ -1,9 +1,7 @@
 package com.financetracker.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -17,6 +15,9 @@ public class Transaction {
     private Category category;
     private String description;
     private LocalDate date;
+
+    @ManyToOne
+    private User user;
 
     public Transaction() {
     }
@@ -68,4 +69,8 @@ public class Transaction {
     public void setDate(LocalDate newDate) {
         this.date = newDate;
     }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) {this.user = user;}
 }

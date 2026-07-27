@@ -5,4 +5,3 @@ public enum TransactionType {
     PLANNED_EXPENSE,
     DAILY_EXPENSE
 }
-
