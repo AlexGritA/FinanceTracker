@@ -5,6 +5,7 @@ import com.financetracker.model.TransactionType;
 import com.financetracker.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -34,10 +35,17 @@ public class TransactionController {
     public Transaction update(@PathVariable Long id,@RequestBody Transaction transaction) {
         return transactionService.updateById(id, transaction);}
 
+
+    @PostMapping("/import")
+    public List <Transaction> importCsv (@RequestParam("file") MultipartFile file) {
+        return transactionService.importCsv(file);
+    }
+
     @PostMapping
     public Transaction save(@RequestBody Transaction transaction) {
         return transactionService.save(transaction);
     }
+
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
