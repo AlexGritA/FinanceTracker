@@ -28,6 +28,9 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private CategoryService categoryService;
+
     public List<Transaction> getAll() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
@@ -90,9 +93,15 @@ public class TransactionService {
 
                 LocalDate date = LocalDate.parse(dateStr);
 
+                Transaction transaction = new Transaction();
                 TransactionType type;
                 if (amount < 0) {
-                    type = TransactionType.DAILY_EXPENSE;
+                    if (categoryService.isRecurring(description)) {
+                        type = TransactionType.PLANNED_EXPENSE;
+                    } else {
+                        type = TransactionType.DAILY_EXPENSE;
+                        transaction.setCategory(categoryService.categorize(description));
+                    }
                 } else {
                     type = TransactionType.INCOME;
                 }
@@ -101,12 +110,10 @@ public class TransactionService {
                 String username = SecurityContextHolder.getContext().getAuthentication().getName();
                 User user = userService.findByUsername(username);
 
-                Transaction transaction = new Transaction();
                 transaction.setDate(date);
                 transaction.setDescription(description);
                 transaction.setAmount(amount);
                 transaction.setType(type);
-                transaction.setCategory(Category.OVRIGT);
                 transaction.setUser(user);
 
                 transactions.add(transaction);
