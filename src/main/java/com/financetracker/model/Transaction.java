@@ -15,6 +15,7 @@ public class Transaction {
     private Category category;
     private String description;
     private LocalDate date;
+    private String currency;
 
     @ManyToOne
     private User user;
@@ -73,4 +74,8 @@ public class Transaction {
     public User getUser() { return user; }
 
     public void setUser(User user) {this.user = user;}
+
+    public String getCurrency(){return currency;}
+
+    public void setCurrency(String newCurrency) {this.currency = newCurrency;}
 }

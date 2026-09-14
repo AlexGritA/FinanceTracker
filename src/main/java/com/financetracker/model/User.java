@@ -19,6 +19,7 @@ public class User implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
+    private String currency;
 
     public User() {
     }
@@ -78,5 +79,9 @@ public class User implements UserDetails {
     public void setEmail(String newEmail) {
         this.email = newEmail;
     }
+
+    public String getCurrency() {return currency;}
+
+    public void setCurrency(String newCurrency) {this.currency = newCurrency;}
 
 }

@@ -31,6 +31,9 @@ public class TransactionService {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private CurrencyService currencyService;
+
     public List<Transaction> getAll() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
@@ -80,6 +83,10 @@ public class TransactionService {
             String line;
             boolean firstLine = true;
 
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            User user = userService.findByUsername(username);
+            String toCurrency = user.getCurrency();
+
             while ((line = reader.readLine()) != null) {
                 if (firstLine) {
                     firstLine = false;
@@ -90,6 +97,7 @@ public class TransactionService {
                 String dateStr = parts[0];
                 String description = parts[1];
                 Double amount = Double.parseDouble(parts[2]);
+                String fromCurrency = parts[3];
 
                 LocalDate date = LocalDate.parse(dateStr);
 
@@ -106,9 +114,6 @@ public class TransactionService {
                     type = TransactionType.INCOME;
                 }
                 amount = Math.abs(amount);
-
-                String username = SecurityContextHolder.getContext().getAuthentication().getName();
-                User user = userService.findByUsername(username);
 
                 transaction.setDate(date);
                 transaction.setDescription(description);
