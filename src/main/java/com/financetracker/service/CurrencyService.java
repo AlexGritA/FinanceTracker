@@ -2,8 +2,8 @@ package com.financetracker.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CurrencyService {
@@ -13,20 +13,20 @@ public class CurrencyService {
             return amount;
         }
 
-            RestClient restClient = RestClient.create();
-            String url = "https://api.frankfurter.app/latest?amount=" + amount + "&from=" + from + "&to=" + to;
+        RestClient restClient = RestClient.create();
+        String url = "https://api.frankfurter.dev/v2/rate/" + from + "/" + to;
 
-            String response = restClient.get()
+        String response = restClient.get()
                     .uri(url)
                     .retrieve()
                     .body(String.class);
             try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(response);
-            return root.path("rates").path(to).asDouble();
+            Double rate = root.path("rate").asDouble();
+            return amount * rate;
             } catch (Exception e) {
                 return amount;
         }
     }
-
 }

@@ -117,6 +117,8 @@ public class TransactionService {
 
                 transaction.setDate(date);
                 transaction.setDescription(description);
+                amount = currencyService.convert(amount, fromCurrency, toCurrency);
+                transaction.setCurrency(fromCurrency);
                 transaction.setAmount(amount);
                 transaction.setType(type);
                 transaction.setUser(user);
