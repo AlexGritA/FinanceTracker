@@ -8,12 +8,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class CurrencyService {
 
+    private final RestClient restClient;
+
+    public CurrencyService(RestClient restClient) {
+
+        this.restClient = restClient;
+    }
+
     public Double convert(Double amount, String from, String to) {
         if(from.equals(to)) {
             return amount;
         }
 
-        RestClient restClient = RestClient.create();
         String url = "https://api.frankfurter.dev/v2/rate/" + from + "/" + to;
 
         String response = restClient.get()
